@@ -83,24 +83,32 @@ for line in open('VenueInfo_Coordinate.txt'):
 
     retry = 3
     while retry:
-        conn.request('GET', path)
-        r = conn.getresponse()
+        try:
+            conn.request('GET', path)
+            r = conn.getresponse()
 
-        js = r.read()
-        pos = js.find('code') + 6
-        #pos1 = js.find('}', pos)
-        #code = js[pos:pos1]
-        code = js[pos:pos+3]
-        if code != '200':
-            print code
-            print js
+            js = r.read()
+            pos = js.find('code') + 6
+            #pos1 = js.find('}', pos)
+            #code = js[pos:pos1]
+            code = js[pos:pos+3]
+            if code != '200':
+                print code
+                print js
+                retry -= 1
+                time.sleep(5)
+                continue
+            f.write(js) 
+            f.write('\n')
+            break
+        except:
             retry -= 1
             time.sleep(5)
+
+            ACCESS_TOKEN = get_access_token()
+            conn = httplib.HTTPSConnection(API_HOST)
             continue
 
-        f.write(js) 
-        f.write('\n')
-        break
 
     c += 1
     if c%100 == 0:
