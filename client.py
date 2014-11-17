@@ -1,4 +1,4 @@
-import httplib, urllib
+import httplib, urllib, socket
 import time, os
 import json
 
@@ -8,10 +8,12 @@ REDIRECT_URI = 'http://www.ntu.edu.sg/'
 
 HOST = 'foursquare.com'
 API_HOST = 'api.foursquare.com'
+TIMEOUT = 30
 
+socket.setdefaulttimeout(TIMEOUT)
 
 def get_access_token():
-    conn = httplib.HTTPSConnection(HOST)
+    conn = httplib.HTTPSConnection(HOST, timeout=TIMEOUT)
 
     params = {
         'client_id' : CLIENT_ID,
@@ -71,7 +73,7 @@ print ACCESS_TOKEN
 
 VENUE_PATH = '/v2/venues/%%s?oauth_token=%s&v=20141113' % ACCESS_TOKEN
 
-conn = httplib.HTTPSConnection(API_HOST)
+conn = httplib.HTTPSConnection(API_HOST, timeout=TIMEOUT)
 
 f = open('venues.txt', 'w')
 c = 1
