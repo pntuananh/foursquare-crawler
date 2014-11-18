@@ -8,23 +8,29 @@ REDIRECT_URI = 'http://www.ntu.edu.sg/'
 
 HOST = 'foursquare.com'
 API_HOST = 'api.foursquare.com'
-TIMEOUT = 30
+TIMEOUT = 60
 
 socket.setdefaulttimeout(TIMEOUT)
 
 def get_access_token():
-    conn = httplib.HTTPSConnection(HOST, timeout=TIMEOUT)
+    while True:
+        try:
+            conn = httplib.HTTPSConnection(HOST, timeout=TIMEOUT)
 
-    params = {
-        'client_id' : CLIENT_ID,
-        'response_type' : 'code',
-        'redirect_uri' : REDIRECT_URI,
-        }
+            params = {
+                'client_id' : CLIENT_ID,
+                'response_type' : 'code',
+                'redirect_uri' : REDIRECT_URI,
+                }
 
-    path = '/oauth2/authenticate?%s' % urllib.urlencode(params)
+            path = '/oauth2/authenticate?%s' % urllib.urlencode(params)
 
-    conn.request('GET', path)
-    r = conn.getresponse()
+            conn.request('GET', path)
+            r = conn.getresponse()
+
+            break
+        except:
+            time.sleep(10)
 
     data = r.read()
     pos = data.find('name="fs-request-signature"')
@@ -108,7 +114,7 @@ for line in open('VenueInfo_Coordinate.txt'):
             time.sleep(5)
 
             ACCESS_TOKEN = get_access_token()
-            conn = httplib.HTTPSConnection(API_HOST)
+            conn = httplib.HTTPSConnection(API_HOST, timeout=TIMEOUT)
             continue
 
 
