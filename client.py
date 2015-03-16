@@ -2,9 +2,9 @@ import httplib, urllib, socket
 import time, os
 import json
 
-CLIENT_ID = '2QDCK4V50CJF23APRR0LBJNMSS0VWACTXSPP3IATIFQ4SKTK'
-CLIENT_SECRET = '343G3ZRHBTCJWBDSQH2B0JZGSOFNOHAJN22HJAYVUB5KRFWK'
-REDIRECT_URI = 'http://www.ntu.edu.sg/'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+REDIRECT_URI = ''
 
 HOST = 'foursquare.com'
 API_HOST = 'api.foursquare.com'
