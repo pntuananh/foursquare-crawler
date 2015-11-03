@@ -53,7 +53,7 @@ def get_access_token():
     headers['Cookie'] += '; XSESSIONID=' + sessionid
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
-    body = 'fs-request-signature=' + urllib.quote(signature) + '&shouldAuthorize=true&emailOrPhone=pnta1986%40yahoo.com.vn&password=123456' 
+    body = 'fs-request-signature=' + urllib.quote(signature) + '&shouldAuthorize=true&emailOrPhone=&password=' 
     conn.request('POST', path, body=body, headers=headers)
     r = conn.getresponse()
     r.read()
